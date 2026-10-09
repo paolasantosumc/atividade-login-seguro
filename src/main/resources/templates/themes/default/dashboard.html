@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Painel</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+    <div th:replace="~{fragments/header :: header}"></div>
+    <main class="container">
+        <section class="hero"><span class="eyebrow">Área autenticada</span>
+            <h1>Bem-vindo, <span th:text="${#authentication.name}">usuário</span>.</h1>
+        </section>
+        <div class="grid">
+            <article class="card">
+                <h2>Usuário</h2>
+                <p>Perfil autenticado e sessão protegida pelo Spring Security.</p>
+            </article>
+            <article class="card" sec:authorize="hasAnyRole('MANAGER','ADMIN')">
+                <h2>Gestão</h2>
+                <p>Acesso concedido ao perfil de gestor ou administrador.</p><a class="button" th:href="@{/admin/users}" sec:authorize="hasRole('ADMIN')">Gerenciar usuários</a></article>
+        </div>
+    </main>
+    <div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Cadastro de Novo Usuário</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+
+<body class="auth-bg">
+    <main class="card auth-card">
+        <h1>Criar conta</h1>
+        <div class="alert error" th:if="${error}" th:text="${error}"></div>
+        <form th:action="@{/register}" th:object="${form}" method="post">
+            <label>Nome completo
+                <input th:field="*{fullName}" required><small th:errors="*{fullName}"></small></label>
+            <label>Usuário
+                <input th:field="*{username}" required><small th:errors="*{username}"></small></label>
+            <label>E-mail
+                <input type="email" th:field="*{email}" required><small th:errors="*{email}"></small></label>
+            <label>Senha
+                <input type="password" th:field="*{password}" autocomplete="new-password" required><small th:errors="*{password}"></small></label>
+            <label>Confirmar senha
+                <input type="password" th:field="*{confirmPassword}" autocomplete="new-password" required><small th:errors="*{confirmPassword}"></small></label>
+            <button class="primary" type="submit">Cadastrar</button>
+        </form>
+        <p><a th:href="@{/login}">Voltar ao login</a></p>
+    </main>
+</body>
+
+</html>

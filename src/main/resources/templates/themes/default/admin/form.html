@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Usuário</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+    <div th:replace="~{fragments/header :: header}"></div>
+    <main class="container narrow">
+        <div class="card">
+            <h1 th:text="${id != null ? 'Editar usuário':'Novo usuário'}"></h1>
+            <div class="alert error" th:if="${error}" th:text="${error}"></div>
+            <form th:action="${id != null ? '/admin/users/' + id : '/admin/users'}" th:object="${form}" method="post">
+                <label>Nome completo
+                    <input th:field="*{fullName}" required>
+                </label>
+                <label>Usuário
+                    <input th:field="*{username}" required>
+                </label>
+                <label>E-mail
+                    <input type="email" th:field="*{email}" required>
+                </label>
+                <label th:if="${id == null}">Senha inicial
+                    <input type="password" name="password" minlength="12" required>
+                </label>
+                <fieldset>
+                    <legend>Perfis</legend>
+                    <label class="check" th:each="role : ${roles}">
+                        <input type="checkbox" th:field="*{roles}" th:value="${role}"><span><strong th:text="${role.label}"></strong><br><span class="muted" th:text="${role.description}"></span></span>
+                    </label>
+                </fieldset>
+                <label class="check">
+                    <input type="checkbox" th:field="*{enabled}"><span>Usuário ativo</span></label>
+                <button class="primary" type="submit">Salvar</button><a class="button secondary" th:href="@{/admin/users}">Cancelar</a></form>
+        </div>
+    </main>
+</body>
+</html>
